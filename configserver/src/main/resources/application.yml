@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: "configserver"
+  profiles:
+    active: git
+  #active: native
+  cloud:
+    config:
+      server:
+        #native:
+          #search-locations: "classpath:/config"
+          #search-locations: file:///C:\anas-spring-cloud\config-repo
+        git:
+          uri: https://github.com/anaskh-10/config-repo
+          default-label: main
+          clone-on-start: true
+server:
+  port: 9999

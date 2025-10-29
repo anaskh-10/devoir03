@@ -1,0 +1,34 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: teacher
+  datasource:
+    url: jdbc:h2:mem:teacherdb
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: true
+  eureka:
+    client:
+      service-url:
+        defaultZone: 'http://localhost:8761/eureka/'
+# These are top-level properties (not under "spring")
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+eureka:
+  instance:
+    prefer-ip-address: true

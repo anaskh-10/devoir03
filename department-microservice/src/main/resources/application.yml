@@ -1,0 +1,38 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:9999/"
+
+
+  application:
+    name: department
+  datasource:
+    url: jdbc:h2:mem:depdb
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
