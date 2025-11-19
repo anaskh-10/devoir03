@@ -2,6 +2,11 @@ server:
   port: 8888
 
 spring:
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
   application:
     name: gatewayserver
   cloud:
@@ -14,20 +19,22 @@ spring:
         locator:
           enabled: false
           lower-case-service-id: true  # ? Use kebab-case (standard)
-      routes:
-        - id: r1
-          uri: lb://DEPARTMENT
-          predicates:
-            - Path=/api/departments/**
-        - id: r2
-          uri: lb://TEACHER
-          predicates:
-            - Path=/api/teachers/**
+#      routes:
+#        - id: r1
+#          uri: lb://DEPARTMENT
+#          predicates:
+#            - Path=/api/departments/**
+#        - id: r2
+#          uri: lb://TEACHER
+#          predicates:
+#            - Path=/api/teachers/**
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761/eureka}
   instance:
     prefer-ip-address: true
 
@@ -38,4 +45,12 @@ management:
         include: "*"
   endpoint:
     gateway:
-      enabled: true  # ? 'access: unrestricted' is not standard; use 'enabled'
+      access: unrestricted # ? 'access: unrestricted' is not standard; use 'enabled'
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 100

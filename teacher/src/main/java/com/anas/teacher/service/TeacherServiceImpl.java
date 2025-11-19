@@ -19,22 +19,26 @@ public class TeacherServiceImpl implements TeacherService {
     private WebClient webClient;
     @Autowired
     private APIClient apiClient;
+
+
     @Override
     public APIResponseDto getTeacherById(Long id) {
+
         Teacher teacher = teacherRepository.findById(id).get();
-//        DepartmentDto departmentDto = webClient.get()
-//                .uri("http://localhost:8081/api/departments/" +
-//                        teacher.getDepCode())
-//                .retrieve()
-//                .bodyToMono(DepartmentDto.class)
-//                .block();
+
         DepartmentDto departmentDto = apiClient.getDepByCode(teacher.getDepCode());
+        String dname ;
+        if (departmentDto == null)
+            dname ="NOT AVAILABLE";
+        else
+            dname = departmentDto.getDepName();
 
         TeacherDto teacherDto = new TeacherDto(
                 teacher.getId(),
                 teacher.getFirstName(),
                 teacher.getLastName(),
-                teacher.getDepCode()
+                teacher.getDepCode(),
+                dname
         );
         APIResponseDto apiResponseDto = new APIResponseDto();
         apiResponseDto.setTeacherDto(teacherDto);

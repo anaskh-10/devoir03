@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepartmentController {
     private final Departmentservice departmentservice;
 
-    @Value("${build.version}")
-    private String buildVersion;
-
-    @Autowired
-    Configuration configuration;
-
+//    @Value("${build.version}")
+//    private String buildVersion;
+//
+//    @Autowired
+//    Configuration configuration;
+//
     public DepartmentController(Departmentservice departmentservice){
         this.departmentservice = departmentservice;
     }
@@ -35,15 +35,15 @@ public class DepartmentController {
                 departmentservice.getDepartmentByCode(code), HttpStatus.OK
         );
     }
-    @GetMapping("/version")
-    public ResponseEntity<String> version()
-    {
-        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
-    }
-    @GetMapping("/author")
-    public ResponseEntity<String> retrieveAuthorInfo() {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(configuration.getName()+" "+configuration.getEmail() );
-    }
+//    @GetMapping("/version")
+//    public ResponseEntity<String> version()
+//    {
+//        return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+//    }
+//    @GetMapping("/author")
+//    public ResponseEntity<String> retrieveAuthorInfo() {
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(configuration.getName()+" "+configuration.getEmail() );
+//    }
 
 }

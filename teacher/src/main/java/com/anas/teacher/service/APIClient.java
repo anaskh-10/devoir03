@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 //@FeignClient(url = "http://localhost:8081", value = "DEPARTMENT")
 @FeignClient(name = "DEPARTMENT")
+//@FeignClient(name = "DEPARTMENT", fallback = DeptFallBack.class)
+
 public interface APIClient {
 
     @GetMapping("api/departments/{department-code}")
